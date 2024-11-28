@@ -1,6 +1,6 @@
 const express = require('express');
-const { getAllUsers, createUser, deleteUser, updateUser, loginUser } = require('../controllers/userController'); // Import controller
-const { logoutUser } = require('../controllers/authController'); 
+const { getAllUsers, createUser, deleteUser, updateUser  } = require('../controllers/userController'); // Import controller
+const { loginUser, logoutUser } = require('../controllers/authController'); 
 const router = express.Router();
 
 // Define routes

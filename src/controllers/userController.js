@@ -4,45 +4,6 @@ const jwt = require('jsonwebtoken'); // For generating JWT tokens
 
 
 
-// User login (for generating JWT token)
-const loginUser = async (req, res) => {
-    const { email, password } = req.body;
-
-    try {
-        // Find the user in the database
-        const user = await User.findOne({ email });
-        
-        // Check if the user exists and password matches
-        if (!user || user.password !== password) {
-            return res.status(400).json({ message: 'Invalid credentials' });
-        }
-
-        // Generate an access JWT token (expires in 1 hour)
-        const accessToken = jwt.sign(
-            { id: user._id, name: user.name, email: user.email }, // Payload
-            process.env.JWT_SECRET, // Secret key (from .env)
-            { expiresIn: '1h' } // Token expiry time (1 hour)
-        );
-
-        // Generate a refresh JWT token (expires in 7 days)
-        const refreshToken = jwt.sign(
-            { id: user._id, name: user.name, email: user.email }, // Payload
-            process.env.JWT_SECRET, // Secret key (from .env)
-            { expiresIn: '7d' } // Token expiry time (7 days)
-        );
-
-        // Send both tokens in the response
-        res.status(200).json({
-            message: 'Login successful',
-            accessToken, // Access token for secure routes
-            refreshToken // Refresh token to get a new access token
-        });
-
-    } catch (error) {
-        res.status(500).json({ message: 'Failed to login', error: error.message });
-    }
-};
-
 // Create a user
 const createUser = async (req, res) => {
     const { name, email, password, address } = req.body;
@@ -114,4 +75,4 @@ const updateUser = async (req, res) => {
 
 
 
-module.exports = {loginUser, getAllUsers, createUser, deleteUser, updateUser };
+module.exports = {getAllUsers, createUser, deleteUser, updateUser };
