@@ -30,6 +30,19 @@ const getAllUsers = async (req, res) => {
     }
 };
 
+// For fetching a single user
+
+const getSngleUser = async (req, res) => {
+    try {
+        const { id } = req.params; // User ID from URL parameters
+        const user = await User.findById(id); // Fetch single user
+        res.status(200).json({ user });
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to retrieve users', error: error.message });
+    }
+};
+
+
 // For delete a single user
 const deleteUser = async (req, res) => {
     const { id } = req.params; // User ID from URL parameters
@@ -75,4 +88,4 @@ const updateUser = async (req, res) => {
 
 
 
-module.exports = {getAllUsers, createUser, deleteUser, updateUser };
+module.exports = {getAllUsers, getSngleUser, createUser, deleteUser, updateUser };
