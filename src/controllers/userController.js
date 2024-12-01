@@ -22,6 +22,13 @@ const createUser = async (req, res) => {
 
 // For displaying all users
 const getAllUsers = async (req, res) => {
+
+    const token = req.headers.authorization?.split(' ')[1]; // Extract token from the Authorization header
+
+    if (!token) {
+        return res.status(400).json({ message: 'Token is required for getAllUser' });
+    }
+
     try {
         const users = await User.find(); // Fetch all users
         res.status(200).json({ users });
@@ -33,6 +40,12 @@ const getAllUsers = async (req, res) => {
 // For fetching a single user
 
 const getSngleUser = async (req, res) => {
+    const token = req.headers.authorization?.split(' ')[1]; // Extract token from the Authorization header
+
+    if (!token) {
+        return res.status(400).json({ message: 'Token is required for getSngleUser' });
+    }
+
     try {
         const { id } = req.params; // User ID from URL parameters
         const user = await User.findById(id); // Fetch single user
@@ -45,6 +58,13 @@ const getSngleUser = async (req, res) => {
 
 // For delete a single user
 const deleteUser = async (req, res) => {
+
+    const token = req.headers.authorization?.split(' ')[1]; // Extract token from the Authorization header
+
+    if (!token) {
+        return res.status(400).json({ message: 'Token is required for deleteUser' });
+    }
+
     const { id } = req.params; // User ID from URL parameters
 
     console.log("User ID: ", id);
@@ -65,6 +85,12 @@ const deleteUser = async (req, res) => {
 
 // Update a user
 const updateUser = async (req, res) => {
+    const token = req.headers.authorization?.split(' ')[1]; // Extract token from the Authorization header
+
+    if (!token) {
+        return res.status(400).json({ message: 'Token is required for updateUser' });
+    }
+
     const { id } = req.params; // User ID from URL parameters
     const { name, email, password, address } = req.body; // Fields to update
 
